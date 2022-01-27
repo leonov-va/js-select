@@ -1,0 +1,33 @@
+{
+  "name": "js-select-example",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "parcel --dist-dir docs",
+    "build": "parcel build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "targets": {
+    "default": {
+      "includeNodeModules": false,
+      "sourceMap": false,
+      "source": "src/index.html",
+      "distDir": "docs",
+      "publicUrl": "./"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonov-va/js-select-example.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leonov-va/js-select-example/issues"
+  },
+  "homepage": "https://github.com/leonov-va/js-select-example#readme",
+  "devDependencies": {
+    "parcel": "^2.2.1"
+  }
+}
