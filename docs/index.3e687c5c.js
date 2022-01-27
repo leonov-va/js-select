@@ -519,6 +519,165 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"b8vEi":[function(require,module,exports) {
+var _indexSass = require("./index.sass");
+var _indexJs = require("./libs/select/index.js");
+const select = new _indexJs.Select("#select", {
+    placeholder: "Select lang",
+    selectedValue: "2",
+    data: [
+        {
+            label: "React",
+            value: "1"
+        },
+        {
+            label: "Angular",
+            value: "2"
+        },
+        {
+            label: "Vue",
+            value: "3"
+        },
+        {
+            label: "React Native",
+            value: "4"
+        },
+        {
+            label: "Svelte",
+            value: "5"
+        }, 
+    ],
+    onSelect (item) {
+        console.log("item: ", item);
+    }
+});
 
-},{}]},["8VKqD","b8vEi"], "b8vEi", "parcelRequiree4bf")
+},{"./libs/select/index.js":"jFnzS","./index.sass":"dFksG"}],"jFnzS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Select", ()=>Select
+);
+var _indexCss = require("./index.css");
+class Select {
+    constructor(selector, options){
+        this.$el = document.querySelector(selector);
+        this.options = options;
+        this.selectedValue = options.selectedValue;
+        this.#render();
+        this.#setup();
+    }
+     #render() {
+        const { data , placeholder  } = this.options;
+        this.$el.classList.add("select");
+        this.$el.innerHTML = getTemplate(data, placeholder, this.selectedValue);
+    }
+     #setup() {
+        this.clickHandler = this.clickHandler.bind(this);
+        this.$el.addEventListener("click", this.clickHandler);
+        this.$arrow = this.$el.querySelector(`[data-type="arrow"]`);
+        this.$value = this.$el.querySelector(`[data-type="value"]`);
+    }
+    clickHandler(event) {
+        const { type  } = event.target.dataset;
+        switch(type){
+            case "input":
+                this.toggle();
+                break;
+            case "item":
+                this.select(event.target.dataset.value);
+                break;
+            case "backdrop":
+                this.close();
+                break;
+        }
+    }
+    select(value) {
+        this.selectedValue = value;
+        this.$value.textContent = this.current.label;
+        this.$el.querySelectorAll(`[data-type="item"]`).forEach((el)=>el.classList.remove("select__item--selected")
+        );
+        this.$el.querySelector(`[data-value="${value}"]`).classList.add("select__item--selected");
+        this.options.onSelect && this.options.onSelect(this.current);
+        this.close();
+    }
+    toggle() {
+        this.isOpen ? this.close() : this.open();
+    }
+    open() {
+        this.$el.classList.add("select--open");
+        this.$arrow.classList.remove("fa-chevron-down");
+        this.$arrow.classList.add("fa-chevron-up");
+    }
+    close() {
+        this.$el.classList.remove("select--open");
+        this.$arrow.classList.add("fa-chevron-down");
+        this.$arrow.classList.remove("fa-chevron-up");
+    }
+    destroy() {
+        this.$el.removeEventListener("click", this.clickHandler);
+        this.$el.innerHTML = "";
+    }
+    get isOpen() {
+        return this.$el.classList.contains("select--open");
+    }
+    get current() {
+        return this.options.data.find((item)=>item.value === this.selectedValue
+        );
+    }
+}
+// ################################
+const getTemplate = (data = [], placeholder, selectedValue)=>{
+    let text = placeholder ?? "Select";
+    const items = data.map((item)=>{
+        let cls = "";
+        if (item.value === selectedValue) {
+            text = item.label;
+            cls = "select__item--selected";
+        }
+        return `<li class="select__item ${cls}" data-type="item" data-value="${item.value}">${item.label}</li>`;
+    });
+    return `
+    <div class="select__backdrop" data-type="backdrop"></div>
+    <div class="select__input" data-type="input">
+      <span class="select__value" data-type="value">${text}</span>
+      <i class="fa fa-chevron-down" data-type="arrow"></i>
+    </div>
+    <div class="select__dropdown">
+      <ul class="select__list">
+        ${items.join("")}
+      </ul>
+    </div>
+  `;
+};
+
+},{"./index.css":"iiNHN","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"iiNHN":[function() {},{}],"j7FRh":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"dFksG":[function() {},{}]},["8VKqD","b8vEi"], "b8vEi", "parcelRequiree4bf")
 

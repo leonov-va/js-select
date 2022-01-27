@@ -9,6 +9,7 @@
   },
   "targets": {
     "default": {
+      "outputFormat": "esmodule",
       "includeNodeModules": false,
       "sourceMap": false,
       "source": "src/index.html",
@@ -28,6 +29,7 @@
   },
   "homepage": "https://github.com/leonov-va/js-select-example#readme",
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.2.1",
     "parcel": "^2.2.1"
   }
 }
